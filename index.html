@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Guía interactiva de escalado intraday en Meta Ads para COD — EcomBomb">
+<title>Escalado Intraday · EcomBomb</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root {
+    --brand: #1e40af;
+    --brand-light: #3b82f6;
+    --brand-dark: #1e3a8a;
+    --accent: #0ea5e9;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  .brand-bg { background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%); }
+  .card-shadow { box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 10px 40px -10px rgba(30,64,175,0.15); }
+  .tree-node { transition: all 0.3s ease; }
+  .tree-node:hover { transform: translateY(-2px); }
+  .btn-primary {
+    background: var(--brand);
+    color: white;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover { background: var(--brand-dark); transform: translateY(-1px); }
+  .btn-outline {
+    border: 2px solid var(--brand);
+    color: var(--brand);
+    transition: all 0.2s;
+  }
+  .btn-outline:hover { background: var(--brand); color: white; }
+  .why-box {
+    background: #eff6ff;
+    border-left: 4px solid var(--brand-light);
+    padding: 1rem 1.25rem;
+    border-radius: 0.5rem;
+  }
+  .warning-box {
+    background: #fef3c7;
+    border-left: 4px solid #f59e0b;
+    padding: 1rem 1.25rem;
+    border-radius: 0.5rem;
+  }
+  .danger-box {
+    background: #fee2e2;
+    border-left: 4px solid #dc2626;
+    padding: 1rem 1.25rem;
+    border-radius: 0.5rem;
+  }
+  .success-box {
+    background: #d1fae5;
+    border-left: 4px solid #10b981;
+    padding: 1rem 1.25rem;
+    border-radius: 0.5rem;
+  }
+  .principle-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--brand);
+    color: white;
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  [x-cloak] { display: none !important; }
+  @media print {
+    .no-print { display: none !important; }
+    body { background: white; }
+    .card-shadow { box-shadow: none; border: 1px solid #e5e7eb; }
+  }
+</style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+<!-- NAVBAR -->
+<nav class="no-print sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 rounded-lg brand-bg flex items-center justify-center text-white font-bold">💣</div>
+      <span class="font-bold text-lg">EcomBomb</span>
+      <span class="hidden sm:inline text-sm text-gray-500">· Escalado Intraday</span>
+    </div>
+    <div class="hidden md:flex gap-6 text-sm">
+      <a href="#principios" class="hover:text-blue-800">Principios</a>
+      <a href="#arbol" class="hover:text-blue-800">Árbol de decisión</a>
+      <a href="#cbo-abo" class="hover:text-blue-800">CBO vs ABO</a>
+      <a href="#casos" class="hover:text-blue-800">Casos reales</a>
+      <a href="#errores" class="hover:text-blue-800">Errores comunes</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="brand-bg text-white py-20 px-4">
+  <div class="max-w-4xl mx-auto text-center">
+    <p class="text-blue-100 text-sm uppercase tracking-wider mb-3">Guía interactiva · EcomBomb</p>
+    <h1 class="text-4xl md:text-5xl font-bold mb-5 leading-tight">
+      Escalado Intraday en Meta Ads
+    </h1>
+    <p class="text-xl md:text-2xl text-blue-100 mb-8">
+      Cuándo subir, cuándo bajar y cuándo <strong>no tocar</strong> — aplicado a tu negocio COD
+    </p>
+    <div class="flex flex-wrap justify-center gap-3">
+      <a href="#principios" class="btn-primary px-6 py-3 rounded-lg font-semibold shadow-lg bg-white text-blue-800 hover:bg-blue-50">
+        🚀 Empezar
+      </a>
+      <a href="#arbol" class="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-800 transition">
+        🌳 Ir al árbol de decisión
+      </a>
+    </div>
+    <p class="text-blue-200 text-sm mt-8">
+      ⏱️ Tiempo de lectura: 25 min · 📱 Funciona en móvil y desktop
+    </p>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="max-w-4xl mx-auto px-4 py-12">
+  <div class="bg-white rounded-2xl card-shadow p-8">
+    <h2 class="text-2xl font-bold mb-4">👋 Bienvenido</h2>
+    <p class="text-gray-700 leading-relaxed mb-4">
+      Ya vendes. Tienes campañas activas. Pero te quema una duda constante:
+      <strong>¿cuándo subo el presupuesto y cuánto?</strong>
+    </p>
+    <p class="text-gray-700 leading-relaxed mb-4">
+      Esta guía no es teoría. Es el método exacto que usan los media buyers que escalan
+      productos COD en España a +€1.000/día de spend. Vas a encontrar reglas claras,
+      ejemplos reales con números, y un <strong>árbol interactivo</strong> donde vas
+      clickando y descubres qué hacer en cada escenario.
+    </p>
+    <div class="why-box mt-6">
+      <p class="font-semibold text-blue-900 mb-2">📍 Esta guía asume que:</p>
+      <ul class="text-sm text-gray-700 space-y-1 list-disc list-inside">
+        <li>Tienes ya una campaña con compras (no estamos testeando creatividad)</li>
+        <li>Operas COD (contrareembolso) en España o similar</li>
+        <li>Tu CBO o ABO tiene al menos 3 días de antigüedad</li>
+        <li>Ya conoces Meta Ads Manager y sabes dónde tocar el budget</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- MÓDULO 1: PRINCIPIOS -->
+<section id="principios" class="max-w-4xl mx-auto px-4 py-12">
+  <div class="mb-8">
+    <span class="text-sm font-semibold text-blue-700 uppercase">Módulo 1</span>
+    <h2 class="text-3xl font-bold mt-1">Los 5 principios del escalado intraday</h2>
+    <p class="text-gray-600 mt-2">Antes del árbol, internaliza estas ideas. El árbol es solo la aplicación de estos principios.</p>
+  </div>
+
+  <div class="space-y-4">
+    <!-- Principio 1 -->
+    <div class="bg-white rounded-xl card-shadow p-6 tree-node">
+      <div class="flex items-start gap-4">
+        <div class="principle-number flex-shrink-0">1</div>
+        <div class="flex-1">
+          <h3 class="text-xl font-bold mb-2">Intraday = datos de HOY. Solo hoy.</h3>
+          <p class="text-gray-700 mb-3">
+            Para decisiones intraday (durante el día), <strong>ignora el histórico de 7 días</strong>.
+            Usa solo los datos de las últimas horas. El histórico es para decisiones estratégicas
+            (pausar, matar campaña) — no para subir o bajar budget en caliente.
+          </p>
+          <div class="why-box">
+            <p class="text-sm"><strong>¿Por qué?</strong> Meta opera en tiempo real. Si una campaña va bien HOY,
+            subes HOY. Si ayer fue un mal día pero hoy ROAS es 5x, subes. El histórico es un promedio que
+            <em>diluye</em> la señal del momento.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Principio 2 -->
+    <div class="bg-white rounded-xl card-shadow p-6 tree-node">
+      <div class="flex items-start gap-4">
+        <div class="principle-number flex-shrink-0">2</div>
+        <div class="flex-1">
+          <h3 class="text-xl font-bold mb-2">ROAS es señal, compras son verdad</h3>
+          <p class="text-gray-700 mb-3">
+            Mira ROAS primero, compras segundo. <strong>Nunca tomes decisiones con
+            0 compras, por muy alto que sea el ROAS teórico.</strong> El ROAS con cero ventas es ruido.
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+            <div class="success-box text-sm">
+              <strong>✅ Señal real:</strong><br>
+              ROAS 5x con 3 compras en £30 spend
+            </div>
+            <div class="danger-box text-sm">
+              <strong>⚠️ Ruido:</strong><br>
+              ROAS 20x con 1 compra en £2 spend
+            </div>
+          </div>
+          <div class="why-box mt-3">
+            <p class="text-sm"><strong>¿Por qué?</strong> Meta asigna valor a cada conversión. Con
+            1 sola venta, el ROAS puede variar ±50% por azar estadístico. Con 3+ ventas la señal
+            empieza a ser fiable.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Principio 3 -->
+    <div class="bg-white rounded-xl card-shadow p-6 tree-node">
+      <div class="flex items-start gap-4">
+        <div class="principle-number flex-shrink-0">3</div>
+        <div class="flex-1">
+          <h3 class="text-xl font-bold mb-2">Meta tiene una zona de confort de delivery</h3>
+          <p class="text-gray-700 mb-3">
+            <strong>Un salto demasiado grande en budget rompe la delivery.</strong>
+            Meta vuelve a fase de aprendizaje, expande la audiencia y te envía tráfico
+            de peor calidad. Resultado: el ROAS se desploma.
+          </p>
+          <div class="bg-gray-100 rounded-lg p-4 mt-3">
+            <p class="font-semibold mb-2">📊 Regla práctica de saltos máximos:</p>
+            <table class="w-full text-sm">
+              <tr class="border-b">
+                <td class="py-2">Budget actual <strong>&lt; £100</strong></td>
+                <td class="py-2 text-right text-green-700">Puedes subir hasta <strong>+70%</strong></td>
+              </tr>
+              <tr class="border-b">
+                <td class="py-2">Budget <strong>£100-250</strong></td>
+                <td class="py-2 text-right text-green-700">Máximo <strong>+50%</strong></td>
+              </tr>
+              <tr class="border-b">
+                <td class="py-2">Budget <strong>£250-400</strong></td>
+                <td class="py-2 text-right text-yellow-700">Máximo <strong>+30%</strong></td>
+              </tr>
+              <tr>
+                <td class="py-2">Budget <strong>&gt; £400</strong></td>
+                <td class="py-2 text-right text-red-700">Máximo <strong>+20%</strong></td>
+              </tr>
+            </table>
+          </div>
+          <div class="why-box mt-3">
+            <p class="text-sm"><strong>¿Por qué?</strong> No es el % lo que rompe Meta, es el INCREMENTO
+            ABSOLUTO. Pasar de £30 a £51 son £21 nuevos — Meta los digiere. Pasar de £500 a £850 son
+            £350 nuevos — Meta entra en pánico y expande a audiencias dudosas.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Principio 4 -->
+    <div class="bg-white rounded-xl card-shadow p-6 tree-node">
+      <div class="flex items-start gap-4">
+        <div class="principle-number flex-shrink-0">4</div>
+        <div class="flex-1">
+          <h3 class="text-xl font-bold mb-2">Después de subir, espera 90 minutos</h3>
+          <p class="text-gray-700 mb-3">
+            Cuando subes budget, Meta necesita tiempo para recalibrar. <strong>No vuelvas a subir
+            en los siguientes 90 minutos</strong>, aunque entren más compras y el ROAS suba.
+            Observa si el escalado funciona.
+          </p>
+          <div class="warning-box mt-3">
+            <p class="text-sm">
+              <strong>⚠️ El error más común:</strong> ver que entra otra compra 30 min después
+              del escalado y subir otra vez. Es demasiado pronto. Meta todavía está procesando
+              el primer cambio. Doble subida seguida = doble riesgo.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Principio 5 -->
+    <div class="bg-white rounded-xl card-shadow p-6 tree-node">
+      <div class="flex items-start gap-4">
+        <div class="principle-number flex-shrink-0">5</div>
+        <div class="flex-1">
+          <h3 class="text-xl font-bold mb-2">Si el escalado no da frutos, reviértelo sin piedad</h3>
+          <p class="text-gray-700 mb-3">
+            Subiste budget +40%. Pasaron 90 minutos. No entró ninguna compra nueva Y el
+            ROAS cayó a &lt;3x. <strong>Vuelve al budget anterior</strong>, inmediatamente.
+            No hay vergüenza en reconocer que el escalado falló.
+          </p>
+          <div class="success-box mt-3">
+            <p class="text-sm">
+              <strong>Disciplina &gt; terquedad.</strong> Mejor revertir 10 veces al mes y estar
+              siempre cerca del óptimo, que aguantar una escalada fallida por orgullo y ver cómo
+              la CBO sangra £200 en una tarde.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MÓDULO 2: ÁRBOL DE DECISIÓN -->
+<section id="arbol" class="bg-blue-50 py-16 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="mb-8">
+      <span class="text-sm font-semibold text-blue-700 uppercase">Módulo 2</span>
+      <h2 class="text-3xl font-bold mt-1">🌳 Árbol de decisión interactivo</h2>
+      <p class="text-gray-600 mt-2">Clica para recorrer el camino según tu escenario. Puedes volver atrás en cualquier momento.</p>
+    </div>
+
+    <div id="tree-container" class="bg-white rounded-2xl card-shadow p-6 md:p-8">
+      <!-- Árbol se renderiza aquí vía JS -->
+    </div>
+
+    <div class="mt-4 flex justify-center gap-3 no-print">
+      <button id="tree-back" class="btn-outline px-4 py-2 rounded-lg text-sm font-semibold hidden">← Volver atrás</button>
+      <button id="tree-reset" class="btn-outline px-4 py-2 rounded-lg text-sm font-semibold">🔄 Empezar de nuevo</button>
+    </div>
+  </div>
+</section>
+
+<!-- MÓDULO 3: CBO vs ABO -->
+<section id="cbo-abo" class="max-w-4xl mx-auto px-4 py-16">
+  <div class="mb-8">
+    <span class="text-sm font-semibold text-blue-700 uppercase">Módulo 3</span>
+    <h2 class="text-3xl font-bold mt-1">CBO vs ABO — Cuándo usar cada una</h2>
+    <p class="text-gray-600 mt-2">No es "una es mejor que la otra". Cada una tiene su momento.</p>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-6">
+    <div class="bg-white rounded-2xl card-shadow p-6 border-t-4 border-blue-600">
+      <h3 class="text-xl font-bold mb-2">📊 CBO</h3>
+      <p class="text-sm text-gray-500 mb-4">Campaign Budget Optimization</p>
+      <p class="text-gray-700 mb-4">
+        <strong>Budget a nivel campaña.</strong> Meta decide cuánto dar a cada conjunto.
+      </p>
+      <p class="font-semibold text-green-700 mb-2">Úsala cuando:</p>
+      <ul class="text-sm text-gray-700 space-y-1 mb-4 list-disc list-inside">
+        <li>La campaña ya tiene ventas estables</li>
+        <li>Fase de <strong>escalado</strong> (lo que cubre esta guía)</li>
+        <li>Quieres que Meta reparta presupuesto automáticamente</li>
+        <li>Tienes 2+ conjuntos con creatividades diferentes</li>
+      </ul>
+      <p class="font-semibold text-red-700 mb-2">Evítala cuando:</p>
+      <ul class="text-sm text-gray-700 space-y-1 list-disc list-inside">
+        <li>Estás testeando audiencias (un conjunto monopolizará el gasto)</li>
+        <li>Necesitas control fino por conjunto</li>
+      </ul>
+    </div>
+
+    <div class="bg-white rounded-2xl card-shadow p-6 border-t-4 border-indigo-600">
+      <h3 class="text-xl font-bold mb-2">🎯 ABO</h3>
+      <p class="text-sm text-gray-500 mb-4">Ad Set Budget Optimization</p>
+      <p class="text-gray-700 mb-4">
+        <strong>Budget por conjunto.</strong> Tú decides cuánto va a cada audiencia.
+      </p>
+      <p class="font-semibold text-green-700 mb-2">Úsala cuando:</p>
+      <ul class="text-sm text-gray-700 space-y-1 mb-4 list-disc list-inside">
+        <li>Estás <strong>testeando</strong> audiencias o creatividades nuevas</li>
+        <li>Quieres control fino sobre spend por audiencia</li>
+        <li>Tienes una audiencia premium que no quieres que se ahogue</li>
+      </ul>
+      <p class="font-semibold text-red-700 mb-2">Evítala cuando:</p>
+      <ul class="text-sm text-gray-700 space-y-1 list-disc list-inside">
+        <li>Ya tienes un ganador claro y quieres escalar</li>
+        <li>No tienes tiempo de vigilar conjunto por conjunto</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="why-box mt-8">
+    <p class="font-semibold text-blue-900 mb-2">💡 Regla de oro para tu negocio COD:</p>
+    <p class="text-sm text-gray-700">
+      <strong>Testea en ABO. Escala en CBO.</strong> Cuando un conjunto ABO demuestra 3-5 días
+      seguidos con ROAS por encima del break-even, duplica su creatividad + audiencia dentro
+      de una CBO y opera en escalado desde ahí. Esta guía se aplica al 100% a esa CBO.
+    </p>
+  </div>
+</section>
+
+<!-- MÓDULO 4: CASOS REALES -->
+<section id="casos" class="bg-blue-50 py-16 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="mb-8">
+      <span class="text-sm font-semibold text-blue-700 uppercase">Módulo 4</span>
+      <h2 class="text-3xl font-bold mt-1">📂 Casos reales</h2>
+      <p class="text-gray-600 mt-2">Escenarios reales de un negocio COD — nombres y números reales.</p>
+    </div>
+
+    <!-- Caso 1 -->
+    <div class="bg-white rounded-2xl card-shadow p-6 mb-6">
+      <div class="flex items-start justify-between flex-wrap gap-3 mb-4">
+        <div>
+          <span class="text-xs text-gray-500 uppercase">Caso 1 · 08:27 mañana</span>
+          <h3 class="text-xl font-bold">El madrugón brutal</h3>
+        </div>
+        <span class="bg-green-100 text-green-800 text-xs font-bold px-3 py-1 rounded-full">
+          WARMUP +20%
+        </span>
+      </div>
+      <div class="bg-gray-50 rounded-lg p-4 mb-4 text-sm space-y-1">
+        <p><strong>CBO:</strong> TOPVIDEOS_B_POST</p>
+        <p><strong>ROAS hoy:</strong> 8.51x</p>
+        <p><strong>Compras hoy:</strong> 1</p>
+        <p><strong>Spend hoy:</strong> £6</p>
+        <p><strong>Budget actual:</strong> £30</p>
+      </div>
+      <p class="text-gray-700 mb-3">
+        <strong>Análisis:</strong> ROAS altísimo pero solo 1 compra. Técnicamente, 1 compra es
+        "ruido estadístico". Pero con ROAS 8.51x el signal es muy fuerte. Esperar a la 2ª compra
+        puede tomar 2-3h y Meta podría enfriar la audiencia.
+      </p>
+      <div class="success-box">
+        <p class="text-sm">
+          <strong>Decisión:</strong> Subir +20% (warmup). Meta recibe más budget para encontrar
+          la 2ª compra más rápido. Si llega, próximo ciclo escalamos fuerte. Si no, no perdemos
+          mucho (+20% sobre £30 = £36, riesgo limitado).
+        </p>
+      </div>
+    </div>
+
+    <!-- Caso 2 -->
+    <div class="bg-white rounded-2xl card-shadow p-6 mb-6">
+      <div class="flex items-start justify-between flex-wrap gap-3 mb-4">
+        <div>
+          <span class="text-xs text-gray-500 uppercase">Caso 2 · 11:30 mañana</span>
+          <h3 class="text-xl font-bold">Escalado fuerte</h3>
+        </div>
+        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full">
+          +70% ESCALADO
+        </span>
+      </div>
+      <div class="bg-gray-50 rounded-lg p-4 mb-4 text-sm space-y-1">
+        <p><strong>CBO:</strong> Copia 15/03</p>
+        <p><strong>ROAS hoy:</strong> 9.37x</p>
+        <p><strong>Compras hoy:</strong> 2</p>
+        <p><strong>Spend hoy:</strong> £4.2</p>
+        <p><strong>Budget actual:</strong> £30</p>
+      </div>
+      <p class="text-gray-700 mb-3">
+        <strong>Análisis:</strong> Las 2 compras validan el ROAS. Budget bajo (£30) permite agresividad
+        máxima. ROAS 9.37x entra en tier "very_strong_signal" (&gt;5.5x).
+      </p>
+      <div class="success-box">
+        <p class="text-sm">
+          <strong>Decisión:</strong> +70%. Budget nuevo = £51.<br>
+          Siguiente paso: cooldown de 90 min. No tocamos aunque el ROAS suba a 14x. Observamos.
+        </p>
+      </div>
+    </div>
+
+    <!-- Caso 3 -->
+    <div class="bg-white rounded-2xl card-shadow p-6">
+      <div class="flex items-start justify-between flex-wrap gap-3 mb-4">
+        <div>
+          <span class="text-xs text-gray-500 uppercase">Caso 3 · 15:00 tarde</span>
+          <h3 class="text-xl font-bold">Revert — escalado fallido</h3>
+        </div>
+        <span class="bg-red-100 text-red-800 text-xs font-bold px-3 py-1 rounded-full">
+          REVERT → £30
+        </span>
+      </div>
+      <div class="bg-gray-50 rounded-lg p-4 mb-4 text-sm space-y-1">
+        <p><strong>CBO:</strong> VIDEO_L3_01/03</p>
+        <p><strong>Escalaste a las 13:30:</strong> de £30 → £42 (+40%) con ROAS 6x + 2 compras</p>
+        <p><strong>Ahora (15:00):</strong></p>
+        <ul class="ml-4 list-disc text-gray-700 space-y-1">
+          <li>ROAS actual: 2.85x</li>
+          <li>Compras: sigue en 2 (cero nuevas desde el escalado)</li>
+          <li>Tiempo transcurrido: 90 min</li>
+        </ul>
+      </div>
+      <p class="text-gray-700 mb-3">
+        <strong>Análisis:</strong> ROAS cayó de 6 a 2.85 (por debajo de 3). Ventana de observación
+        de 90 min ya transcurrida. No ha entrado ni una compra nueva en esos 90 min. El escalado
+        no funcionó.
+      </p>
+      <div class="danger-box">
+        <p class="text-sm">
+          <strong>Decisión:</strong> Revert a £30 (budget anterior). Además, la CBO queda con
+          "short leash" el resto del día: no se volverá a escalar agresivamente hasta mañana.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MÓDULO 5: ERRORES COMUNES + QUIZ -->
+<section id="errores" class="max-w-4xl mx-auto px-4 py-16">
+  <div class="mb-8">
+    <span class="text-sm font-semibold text-blue-700 uppercase">Módulo 5</span>
+    <h2 class="text-3xl font-bold mt-1">❌ Errores comunes que destrozan cuentas</h2>
+    <p class="text-gray-600 mt-2">Los he visto en 100+ cuentas de alumnos. Evita estos y ya vas por delante de la mayoría.</p>
+  </div>
+
+  <div class="space-y-4">
+    <div class="bg-white rounded-xl card-shadow p-5 border-l-4 border-red-500">
+      <p class="font-bold mb-1">❌ Escalar sin compras confirmadas</p>
+      <p class="text-sm text-gray-700">"ROAS 20x con 0 compras, ¡subo!". Error. 0 compras = ROAS inventado por Meta. Espera a tener al menos 1 compra (ideal 2).</p>
+    </div>
+    <div class="bg-white rounded-xl card-shadow p-5 border-l-4 border-red-500">
+      <p class="font-bold mb-1">❌ Subir el doble en budget alto</p>
+      <p class="text-sm text-gray-700">Budget £500 → £1000 porque "funciona muy bien". Meta entra en pánico, expande audiencia, ROAS se desploma. Máximo +20% cuando ya estás en budgets altos.</p>
+    </div>
+    <div class="bg-white rounded-xl card-shadow p-5 border-l-4 border-red-500">
+      <p class="font-bold mb-1">❌ Tocar una CBO que acabas de escalar</p>
+      <p class="text-sm text-gray-700">Escalaste a las 10:00. A las 10:45 "ya entraron 2 compras más, subo de nuevo". Meta aún no ha procesado el primer cambio. Respeta los 90 min.</p>
+    </div>
+    <div class="bg-white rounded-xl card-shadow p-5 border-l-4 border-red-500">
+      <p class="font-bold mb-1">❌ Aguantar una escalada fallida</p>
+      <p class="text-sm text-gray-700">"Seguro se recupera" → 3h después la CBO ha gastado £150 extra sin una venta más. Revierte a tiempo. La terquedad es cara.</p>
+    </div>
+    <div class="bg-white rounded-xl card-shadow p-5 border-l-4 border-red-500">
+      <p class="font-bold mb-1">❌ No bajar el budget por la noche</p>
+      <p class="text-sm text-gray-700">Mantener £500 de budget a las 02:00 cuando nadie convierte. Desescala a £30-50 cada noche. Así Meta arranca fresco al día siguiente sin sangre acumulada.</p>
+    </div>
+    <div class="bg-white rounded-xl card-shadow p-5 border-l-4 border-red-500">
+      <p class="font-bold mb-1">❌ Decidir por el ROAS de 7 días</p>
+      <p class="text-sm text-gray-700">"El ROAS 7d es 2.2x, bajo budget". Pero hoy ROAS es 5x. Para intraday usa HOY. El 7d es para decisiones estratégicas (matar la campaña), no tácticas.</p>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="mt-12 bg-white rounded-2xl card-shadow p-8">
+    <h3 class="text-2xl font-bold mb-2">🎯 Test rápido — ¿Lo has pillado?</h3>
+    <p class="text-gray-600 mb-6">6 preguntas. Responde y comprueba.</p>
+
+    <div id="quiz"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="brand-bg text-white py-10 px-4 mt-8">
+  <div class="max-w-4xl mx-auto text-center">
+    <div class="flex justify-center items-center gap-2 mb-3">
+      <div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center text-xl">💣</div>
+      <span class="font-bold text-xl">EcomBomb</span>
+    </div>
+    <p class="text-blue-100 mb-2">Guía creada para la academia EcomBomb · Jesús Soriano</p>
+    <p class="text-blue-200 text-sm">
+      ¿Dudas? Tu formador en EcomBomb te ayuda. Esta guía no sustituye a clases en vivo — las complementa.
+    </p>
+  </div>
+</footer>
+
+<!-- JAVASCRIPT -->
+<script>
+// ============================================================
+// ÁRBOL DE DECISIÓN
+// ============================================================
+const tree = {
+  start: {
+    title: "🌱 Tu CBO está en fase de escalado",
+    desc: "Estás en una campaña en fase de escalado (no de testing). Empecemos por lo primero que hay que mirar.",
+    question: "¿Cuántas compras tiene tu CBO HOY?",
+    options: [
+      { text: "0 compras", next: "zero_purchases", icon: "🕒" },
+      { text: "1 compra", next: "one_purchase", icon: "🎯" },
+      { text: "2 o más compras", next: "two_plus", icon: "🚀" }
+    ]
+  },
+  zero_purchases: {
+    title: "⏸ Espera — aún no hay señal",
+    desc: "Con 0 compras no tienes datos reales. El ROAS que ves es teórico (Meta estima) y no debes actuar sobre él.",
+    action: "MONITOR (no tocar budget)",
+    why: "Escalar sin compras confirmadas es apostar. Incluso si Meta muestra ROAS 15x, sin ventas reales no hay señal. Espera mínimo a 1 compra confirmada.",
+    extra: "⏱ Tip: si llevan 2h sin primera compra y el spend ya superó £20, algo no va bien. Revisa creatividad y audiencia. Puede que no sea día de escalado.",
+    isLeaf: true
+  },
+  one_purchase: {
+    title: "🎯 1 compra — mira el ROAS",
+    desc: "Con 1 compra tienes la primera validación. Ahora el ROAS importa mucho para decidir si es una señal fuerte o débil.",
+    question: "¿Cuál es el ROAS hoy?",
+    options: [
+      { text: "ROAS < 5x", next: "one_low_roas", icon: "🟡" },
+      { text: "ROAS 5x - 8x", next: "one_mid_roas", icon: "🟢" },
+      { text: "ROAS ≥ 8x", next: "one_high_roas", icon: "🔥" }
+    ]
+  },
+  one_low_roas: {
+    title: "⏸ Espera a la 2ª compra",
+    desc: "1 compra con ROAS moderado no es suficiente para actuar. Podría ser suerte.",
+    action: "MONITOR — espera señal más clara",
+    why: "Con ROAS <5x y solo 1 compra, no hay margen de seguridad. Si subes y no entra 2ª compra, el ROAS se hundirá rápido. Mejor esperar 30-60 min.",
+    isLeaf: true
+  },
+  one_mid_roas: {
+    title: "🟢 Warmup suave",
+    desc: "Señal razonable. Una pequeña subida ayuda a Meta a encontrar la 2ª compra más rápido sin arriesgar demasiado.",
+    action: "SUBE +15-20% (warmup suave)",
+    why: "El objetivo del warmup NO es escalar — es mantener el motor de Meta caliente. Un poco más de budget le da más oxígeno para buscar la 2ª venta antes de que la audiencia se enfríe.",
+    extra: "⏱ Tras el warmup, respeta 90 min de observación. Si llega la 2ª compra, escalas fuerte después.",
+    isLeaf: true
+  },
+  one_high_roas: {
+    title: "🔥 Warmup agresivo",
+    desc: "ROAS brutal con 1 compra = señal muy fuerte incluso con muestra pequeña. No puedes dejar pasar esta oportunidad.",
+    action: "SUBE +20% (warmup agresivo)",
+    why: "ROAS ≥8x con 1 compra significa CPA bajísimo. Si esperas a la 2ª compra puedes perder la ventana (Meta enfría audiencia). El warmup mantiene el motor.",
+    extra: "⚠️ No subas más de +20% con 1 sola compra, aunque ROAS sea 20x. Todavía no tienes validación suficiente para agresión máxima.",
+    isLeaf: true
+  },
+  two_plus: {
+    title: "🚀 2+ compras — escalado real",
+    desc: "Tienes señal validada. Ahora el ROAS decide la agresividad.",
+    question: "¿Cuál es el ROAS hoy?",
+    options: [
+      { text: "ROAS < 2.8x", next: "deescalate", icon: "⚠️" },
+      { text: "ROAS 2.8x - 3.5x", next: "scale_weak", icon: "🟡" },
+      { text: "ROAS 3.5x - 4.5x", next: "scale_mid", icon: "🟢" },
+      { text: "ROAS 4.5x - 5.5x", next: "scale_strong", icon: "🔵" },
+      { text: "ROAS > 5.5x", next: "scale_very_strong", icon: "🔥" }
+    ]
+  },
+  deescalate: {
+    title: "⚠️ Desescalar — está perdiendo dinero",
+    desc: "ROAS por debajo del break-even. Estás perdiendo con cada venta.",
+    action: "REDUCE budget -30% a -50%",
+    why: "ROAS <2.8x en COD España = estás comprando ventas por encima de su margen. Cada compra te hace perder dinero. Reduce budget para limitar la sangría, pero no pauses (da tiempo a recuperar).",
+    extra: "Si al día siguiente sigue bajo, considera pausar creatividades cansadas o cambiar la copia.",
+    isLeaf: true
+  },
+  scale_weak: {
+    title: "🟡 Señal débil pero positiva",
+    desc: "Por encima del break-even, pero margen justo. Sube con cautela.",
+    action: "SUBE +20% (weak_signal)",
+    nextStep: "budget_check",
+    why: "ROAS 2.8-3.5x es supervivencia. Sube un poco para que Meta tenga oxígeno, pero sin pasarte — un exceso puede hundirla. Si ROAS sube a >3.5x en el próximo ciclo, escalas más fuerte.",
+    isLeaf: false,
+    question: "¿Cuál es el budget actual?",
+    options: [
+      { text: "< £100", next: "apply_20_low", icon: "💚" },
+      { text: "£100 - £250", next: "apply_20_mid", icon: "💛" },
+      { text: "£250 - £400", next: "apply_20_high", icon: "🟠" },
+      { text: "> £400", next: "apply_20_xhigh", icon: "🔴" }
+    ]
+  },
+  scale_mid: {
+    title: "🟢 Señal media — escalado razonable",
+    desc: "ROAS sólido. Puedes subir con confianza.",
+    action: "SUBE +30% (medium_signal)",
+    nextStep: "budget_check",
+    why: "ROAS 3.5-4.5x tiene buen margen sobre break-even. Un +30% es agresivo pero no temerario — Meta lo digiere bien.",
+    question: "¿Cuál es el budget actual? (el cap puede ajustar el %)",
+    options: [
+      { text: "< £100", next: "apply_30_low", icon: "💚" },
+      { text: "£100 - £250", next: "apply_30_mid", icon: "💛" },
+      { text: "£250 - £400", next: "apply_30_high", icon: "🟠" },
+      { text: "> £400", next: "apply_30_xhigh", icon: "🔴" }
+    ]
+  },
+  scale_strong: {
+    title: "🔵 Señal fuerte — escalado agresivo",
+    desc: "ROAS alto. Dale caña.",
+    action: "SUBE +50% (strong_signal)",
+    nextStep: "budget_check",
+    why: "ROAS 4.5-5.5x es terreno de agresión real. Meta está dando frutos, el CPA es bajo — es el momento de pedir más.",
+    question: "¿Cuál es el budget actual?",
+    options: [
+      { text: "< £100", next: "apply_50_low", icon: "💚" },
+      { text: "£100 - £250", next: "apply_50_mid", icon: "💛" },
+      { text: "£250 - £400", next: "apply_50_high", icon: "🟠" },
+      { text: "> £400", next: "apply_50_xhigh", icon: "🔴" }
+    ]
+  },
+  scale_very_strong: {
+    title: "🔥 Señal brutal — escalado máximo",
+    desc: "ROAS altísimo. Aprovecha la ola — pero respeta los caps de budget.",
+    action: "SUBE +70% (very_strong_signal)",
+    nextStep: "budget_check",
+    why: "ROAS >5.5x es oro puro. El CPA es bajísimo. Esta es la ventana que todo el día esperas. MAX agresión pero vigilando el budget absoluto.",
+    question: "¿Cuál es el budget actual?",
+    options: [
+      { text: "< £100", next: "apply_70_low", icon: "💚" },
+      { text: "£100 - £250", next: "apply_70_mid", icon: "💛" },
+      { text: "£250 - £400", next: "apply_70_high", icon: "🟠" },
+      { text: "> £400", next: "apply_70_xhigh", icon: "🔴" }
+    ]
+  },
+  // LEAVES — combinaciones step × budget cap
+  apply_20_low:    { isLeaf: true, title: "✅ Sube +20%", action: "Sin cap. Ejecutar +20%.", why: "Budget bajo + señal débil = agresión medida. Ejemplo: £60 → £72." },
+  apply_20_mid:    { isLeaf: true, title: "✅ Sube +20%", action: "Sin cap (20 < 50). Ejecutar +20%.", why: "El cap del tier £100-250 es +50%. Tu +20% cabe. Ejemplo: £150 → £180." },
+  apply_20_high:   { isLeaf: true, title: "✅ Sube +20%", action: "Sin cap (20 < 30). Ejecutar +20%.", why: "Cap del tier es +30%. Tu +20% cabe. Ejemplo: £300 → £360." },
+  apply_20_xhigh:  { isLeaf: true, title: "✅ Sube +20%", action: "Al límite — exactamente +20%.", why: "Budget >£400 solo permite +20% máximo. Ejemplo: £500 → £600." },
+
+  apply_30_low:    { isLeaf: true, title: "✅ Sube +30%", action: "Sin cap. Ejecutar +30%.", why: "Budget bajo permite los +30% limpios. Ejemplo: £60 → £78." },
+  apply_30_mid:    { isLeaf: true, title: "✅ Sube +30%", action: "Sin cap (30 < 50). Ejecutar +30%.", why: "El cap del tier £100-250 es +50%. Tu +30% cabe. Ejemplo: £150 → £195." },
+  apply_30_high:   { isLeaf: true, title: "✅ Sube +30% (al límite)", action: "Al límite — +30%.", why: "Cap del tier £250-400 es +30%. Ejemplo: £300 → £390." },
+  apply_30_xhigh:  { isLeaf: true, title: "⚠️ Capado a +20%", action: "Solo +20% (budget alto rompería delivery).", why: "Budget >£400 solo permite +20%. Tu +30% ideal se recorta. Ejemplo: £500 → £600." },
+
+  apply_50_low:    { isLeaf: true, title: "✅ Sube +50%", action: "Sin cap. Ejecutar +50%.", why: "Budget bajo permite +50% completo. Ejemplo: £60 → £90." },
+  apply_50_mid:    { isLeaf: true, title: "✅ Sube +50% (al límite)", action: "Al límite — +50%.", why: "Cap del tier £100-250 es +50%. Ejemplo: £150 → £225." },
+  apply_50_high:   { isLeaf: true, title: "⚠️ Capado a +30%", action: "Solo +30% (el cap protege tu delivery).", why: "Tu señal dice +50%, pero budget >£250 solo permite +30%. Ejemplo: £300 → £390." },
+  apply_50_xhigh:  { isLeaf: true, title: "⚠️ Capado a +20%", action: "Solo +20% (budget muy alto).", why: "Budget >£400 solo permite +20%. Tu señal fuerte se modera. Ejemplo: £500 → £600." },
+
+  apply_70_low:    { isLeaf: true, title: "🔥 Sube +70%", action: "Sin cap. Máxima agresión. Ejecutar +70%.", why: "Budget bajo + ROAS brutal = modo agresivo sin restricciones. Ejemplo: £60 → £102." },
+  apply_70_mid:    { isLeaf: true, title: "⚠️ Capado a +50%", action: "Solo +50% (el cap del tier recorta).", why: "Tu señal dice +70%, pero budget £100-250 solo permite +50%. Ejemplo: £150 → £225." },
+  apply_70_high:   { isLeaf: true, title: "⚠️ Capado a +30%", action: "Solo +30% (cuidado con la delivery).", why: "Budget alto solo permite +30%. Ejemplo: £300 → £390." },
+  apply_70_xhigh:  { isLeaf: true, title: "⚠️ Capado a +20%", action: "Solo +20% (Meta rompería si subes más).", why: "Budget >£400 solo +20%. La agresión se reserva para CBOs jóvenes con budget bajo. Ejemplo: £500 → £600." },
+};
+
+let history = ["start"];
+
+function renderNode(id) {
+  const node = tree[id];
+  const container = document.getElementById("tree-container");
+  let html = `<div class="space-y-4">`;
+  html += `<h3 class="text-2xl font-bold">${node.title}</h3>`;
+  if (node.desc) html += `<p class="text-gray-700">${node.desc}</p>`;
+
+  if (node.isLeaf) {
+    html += `<div class="success-box"><p class="font-bold text-green-900">📌 Acción recomendada:</p><p class="text-gray-800 mt-1">${node.action}</p></div>`;
+    html += `<div class="why-box"><p class="font-semibold text-blue-900 mb-1">¿Por qué?</p><p class="text-sm text-gray-700">${node.why}</p></div>`;
+    if (node.extra) html += `<div class="warning-box"><p class="text-sm text-gray-800">${node.extra}</p></div>`;
+    html += `<div class="pt-4 border-t border-gray-200"><p class="text-sm text-gray-500">💡 <strong>Recuerda:</strong> Tras escalar, espera 90 minutos sin tocar esta CBO. Si el ROAS cae a &lt;3x sin compras nuevas en esos 90 min, vuelves al budget anterior.</p></div>`;
+  } else if (node.question) {
+    html += `<p class="font-semibold text-gray-800 mt-3">${node.question}</p>`;
+    html += `<div class="grid gap-3 mt-2">`;
+    node.options.forEach(opt => {
+      html += `<button class="tree-node text-left bg-blue-50 hover:bg-blue-100 border-2 border-blue-200 hover:border-blue-500 rounded-lg p-4 transition" onclick="goTo('${opt.next}')">`;
+      html += `<span class="text-2xl mr-2">${opt.icon}</span><span class="font-semibold">${opt.text}</span>`;
+      html += `</button>`;
+    });
+    html += `</div>`;
+  }
+
+  html += `</div>`;
+  container.innerHTML = html;
+
+  document.getElementById("tree-back").classList.toggle("hidden", history.length <= 1);
+}
+
+function goTo(id) {
+  history.push(id);
+  renderNode(id);
+  document.getElementById("tree-container").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+document.getElementById("tree-back").addEventListener("click", () => {
+  if (history.length > 1) {
+    history.pop();
+    renderNode(history[history.length - 1]);
+  }
+});
+
+document.getElementById("tree-reset").addEventListener("click", () => {
+  history = ["start"];
+  renderNode("start");
+});
+
+renderNode("start");
+
+// ============================================================
+// QUIZ
+// ============================================================
+const quiz = [
+  {
+    q: "Una CBO tiene ROAS 18x pero solo 1 compra en £3 de spend. ¿Qué haces?",
+    a: [
+      { t: "Subo +70%, ¡ROAS altísimo!", ok: false, explain: "No. Con solo 1 compra, no tienes validación suficiente. Subir +70% es temerario." },
+      { t: "Subo +20% warmup para mantener el motor caliente", ok: true, explain: "Correcto. La señal es fuerte (ROAS 18x) pero aún incompleta (1 compra). +20% da oxígeno sin arriesgar." },
+      { t: "No toco hasta tener 2 compras", ok: false, explain: "Demasiado conservador. Esperar puede hacer que Meta enfríe la audiencia y pierdas la oportunidad." }
+    ]
+  },
+  {
+    q: "Tu CBO está a £450 de budget con ROAS 6x y 5 compras. Señal brutal. ¿Cuánto subes?",
+    a: [
+      { t: "+70%, es señal very_strong", ok: false, explain: "No. El step tier dice +70%, PERO el budget cap para >£400 solo permite +20%. Ejecutas +20%." },
+      { t: "+50%, señal media pero con cuidado", ok: false, explain: "No. La señal es very_strong (+70%), pero el cap de budget alto te deja solo +20%." },
+      { t: "+20% porque el budget alto recorta el cap", ok: true, explain: "Correcto. Budget >£400 = máximo +20% para no romper la delivery de Meta." }
+    ]
+  },
+  {
+    q: "Escalaste +50% a las 14:00. A las 14:30 entra otra compra. ¿Vuelves a subir?",
+    a: [
+      { t: "Sí, confirmación de que fue buena decisión", ok: false, explain: "No. Solo han pasado 30 min. Respeta el cooldown de 90 min. Meta aún está procesando el cambio." },
+      { t: "Espero 60 min más (completar los 90 min de observación)", ok: true, explain: "Correcto. El cooldown de 90 min es sagrado. Si al cumplirse siguen entrando compras, entonces subes." },
+      { t: "Subo solo un poco (+10%)", ok: false, explain: "No. El cooldown no admite subidas parciales. Espera la ventana completa." }
+    ]
+  },
+  {
+    q: "Escalaste a las 10:00. A las 11:30 ROAS cayó de 6x a 2.9x sin compras nuevas. ¿Qué haces?",
+    a: [
+      { t: "Espero otra hora, seguro se recupera", ok: false, explain: "No. Cumplidos los 90 min, si ROAS está <3x sin compras nuevas, el escalado falló. Aguantar = sangría." },
+      { t: "Revierto al budget anterior sin piedad", ok: true, explain: "Correcto. Ventana cumplida + ROAS <3x + 0 compras nuevas = revert inmediato. Así funcionan los pros." },
+      { t: "Pauso la CBO completamente", ok: false, explain: "Demasiado agresivo. Un mal escalado no justifica matar una CBO con histórico bueno. Solo reviertes." }
+    ]
+  },
+  {
+    q: "Son las 23:00. ¿Qué haces con tu CBO que está a £400 con ROAS 5x hoy?",
+    a: [
+      { t: "Sigo subiendo, va de lujo", ok: false, explain: "No. A las 23:00 las conversiones bajan drásticamente en COD España. Gastar £400 toda la noche es sangría." },
+      { t: "Desescalo a £30-50 para resetear Meta al día siguiente", ok: true, explain: "Correcto. La desescalación nocturna es parte del método. Arrancas mañana con budget bajo y CBO fresca." },
+      { t: "Pauso y reactivo mañana", ok: false, explain: "Pausar rompe el aprendizaje de Meta. Mejor desescalar: mantienes la CBO viva con mínimo spend." }
+    ]
+  },
+  {
+    q: "Tu CBO lleva 7 días con ROAS medio 2.0x pero HOY tiene ROAS 5x con 3 compras. ¿Escalas intraday?",
+    a: [
+      { t: "No, el histórico 7d es malo", ok: false, explain: "No. Para decisiones INTRADAY solo miras HOY. El 7d es para estrategia (matar), no para táctica (escalar hoy)." },
+      { t: "Sí, aplico la regla de hoy: +50% (strong_signal)", ok: true, explain: "Correcto. Hoy manda. Si ROAS hoy es 5x con 3 compras, escalas intraday según el tier correspondiente." },
+      { t: "Subo solo +10% por si acaso", ok: false, explain: "Demasiado conservador. La duda debe venir de datos frescos, no de miedos históricos." }
+    ]
+  }
+];
+
+function renderQuiz() {
+  const container = document.getElementById("quiz");
+  let html = "";
+  quiz.forEach((item, qIdx) => {
+    html += `<div class="mb-8 pb-6 border-b border-gray-200 last:border-0">`;
+    html += `<p class="font-semibold mb-3">P${qIdx+1}. ${item.q}</p>`;
+    html += `<div class="space-y-2" data-q="${qIdx}">`;
+    item.a.forEach((opt, aIdx) => {
+      html += `<button class="quiz-option text-left w-full bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-400 rounded-lg p-3 transition" data-q="${qIdx}" data-a="${aIdx}">${opt.t}</button>`;
+    });
+    html += `</div>`;
+    html += `<div class="quiz-feedback mt-3 hidden" data-q="${qIdx}"></div>`;
+    html += `</div>`;
+  });
+  container.innerHTML = html;
+
+  document.querySelectorAll(".quiz-option").forEach(btn => {
+    btn.addEventListener("click", e => {
+      const qIdx = +e.target.dataset.q;
+      const aIdx = +e.target.dataset.a;
+      const ans = quiz[qIdx].a[aIdx];
+      const fb = document.querySelector(`.quiz-feedback[data-q="${qIdx}"]`);
+      fb.classList.remove("hidden");
+      fb.className = `quiz-feedback mt-3 ${ans.ok ? 'success-box' : 'danger-box'}`;
+      fb.innerHTML = `<p class="font-bold">${ans.ok ? '✅ Correcto' : '❌ Incorrecto'}</p><p class="text-sm mt-1">${ans.explain}</p>`;
+      document.querySelectorAll(`.quiz-option[data-q="${qIdx}"]`).forEach(b => {
+        b.disabled = true;
+        b.classList.add("opacity-50");
+      });
+    });
+  });
+}
+renderQuiz();
+</script>
+
+</body>
+</html>
